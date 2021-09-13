@@ -1,9 +1,7 @@
 
 /**
- * Write a description of Gladlib here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
+ * Gladlib
+ * @version1.0
  */
 import edu.duke.*;
 import java.util.*;
@@ -41,7 +39,45 @@ public class GladLib {
         timeList = readIt(source+"/timeframe.txt");
         verbList = readIt(source+"/verb.txt");
         
-        
     }
     
+    private String randomFrom(ArrayList <String> source){
+        int index = myRandom.nextInt(source.size());
+        return source.get(index);
+    }
+    
+    private String getSubstitute(String label){
+        if(label.equals("country")){
+            return randomFrom(countryList);
+        }
+        if(label.equals("color")){
+            return randomFrom(colorList);
+        }
+        if(label.equals("noun")){
+            return randomFrom(colorList);
+        }
+        if(label.equals("name")){
+            return randomFrom(nameList);
+        }
+        if(label.equals("animal")){
+            return randomFrom(animalList);
+        }
+        if(label.equals("timeframe")){
+            return randomFrom(timeList);
+        }
+        if(label.equals("adjective")){
+            return randomFrom(adjectiveList);
+        }
+        if(label.equals("number")){
+            return ""+myRandom.nextInt(50)+5;
+        }
+        if(label.equals("verb")){
+            return randomFrom(verbList);
+        }
+        
+        return "unknown!";
+    }
+    
+    
 }
+
