@@ -3,6 +3,7 @@
  * Gladlib
  * @version1.0
  */
+
 import edu.duke.*;
 import java.util.*;
 public class GladLib {
@@ -78,6 +79,53 @@ public class GladLib {
         return "unknown!";
     }
     
+    private String processWord(String w){
+        int first = w.indexOf("<");
+        int last = w.indexOf(">",first);
+        if(first == -1||last == -1){
+            return w;
+        }
+        String prefix = w.substring(0,first);
+        String sufix = w.substring(last+1);
+        String sub = getSubstitute(w.substring(first+1,last));
+        return prefix+sub+sufix;
+    }
+    
+    private void printOut(String s,int lineWidth){
+        int charsWritten = 0;
+        for(String w:s.split("\\s+")){
+            if(charsWritten+w.length()>lineWidth){
+                System.out.println();
+                charsWritten = 0;
+            }
+            System.out.println(w+" ");
+            charsWritten += w.length()+1;
+        }
+    }
+    
+    private String fromTemplate(String source){
+        String story = "";
+        if(source.startsWith("http")){
+            URLResource resource = new URLResource(source);
+            for(String word:resource.words()){
+                story = story + processWord(word) +"";
+            }
+            
+            
+        }
+        else{
+            FileResource resource = new FileResource(source);
+            for(String word:resource.words()){
+                story = story + processWord(word) +"";
+            }
+        }
+        return story;
+    }
+    
+    private ArrayList<String> readIt(String source){
+        ArrayList<String>list = new ArrayList<String>();
+        return list;
+    }
     
 }
 
