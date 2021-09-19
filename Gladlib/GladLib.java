@@ -1,9 +1,8 @@
 
 /**
- * Gladlib
+ * GladLib - making fun stories from templates
  * @version1.0
  */
-
 import edu.duke.*;
 import java.util.*;
 public class GladLib {
@@ -14,7 +13,6 @@ public class GladLib {
     private ArrayList<String>nameList;
     private ArrayList<String>animalList;
     private ArrayList<String>timeList;
-    private ArrayList<String>verbList;
     private Random myRandom;
     
     private String dataSourceURL = "";
@@ -38,7 +36,6 @@ public class GladLib {
         nameList = readIt(source+"/name.txt");
         animalList = readIt(source+"/animal.txt");
         timeList = readIt(source+"/timeframe.txt");
-        verbList = readIt(source+"/verb.txt");
         
     }
     
@@ -72,11 +69,7 @@ public class GladLib {
         if(label.equals("number")){
             return ""+myRandom.nextInt(50)+5;
         }
-        if(label.equals("verb")){
-            return randomFrom(verbList);
-        }
-        
-        return "unknown!";
+        return "oops! wrong output";
     }
     
     private String processWord(String w){
@@ -98,7 +91,7 @@ public class GladLib {
                 System.out.println();
                 charsWritten = 0;
             }
-            System.out.println(w+" ");
+            System.out.print(w+" ");
             charsWritten += w.length()+1;
         }
     }
@@ -108,7 +101,7 @@ public class GladLib {
         if(source.startsWith("http")){
             URLResource resource = new URLResource(source);
             for(String word:resource.words()){
-                story = story + processWord(word) +"";
+                story = story + processWord(word) +" ";
             }
             
             
@@ -116,7 +109,7 @@ public class GladLib {
         else{
             FileResource resource = new FileResource(source);
             for(String word:resource.words()){
-                story = story + processWord(word) +"";
+                story = story + processWord(word) +" ";
             }
         }
         return story;
@@ -124,8 +117,25 @@ public class GladLib {
     
     private ArrayList<String> readIt(String source){
         ArrayList<String>list = new ArrayList<String>();
+        if(source.startsWith("http")){
+            URLResource resource = new URLResource(source);
+            for(String line:resource.lines()){
+                list.add(line);
+            }
+            
+        }
+        else{
+            FileResource resource = new FileResource(source);
+            for(String line:resource.lines()){
+                list.add(line);
+            }
+        }
         return list;
     }
     
+    public void makeStory(){
+        //System.out.println();
+        String story = fromTemplate("data/madtemplate.txt");
+        printOut(story,100);
+    }
 }
-
